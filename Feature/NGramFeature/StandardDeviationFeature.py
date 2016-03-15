@@ -14,7 +14,7 @@ class StandardDeviationFeature(NGramFeature):
         prob_list = list()
 
         for i, (prob, length, oov) in enumerate(full_scores):
-            list.append(prob)
+            prob_list.append(prob)
         st_deviation = numpy.std(prob_list)
 
         return st_deviation
