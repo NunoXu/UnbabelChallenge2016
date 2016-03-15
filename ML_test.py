@@ -1,5 +1,7 @@
-from sklearn import svm
-X = [[0, 0], [1, 1]]
-y = [0, 1]
-clf = svm.SVC()
-print(clf.fit(X, y))
+from Feature.NGramFeature.ProbabilityFeature import Probability
+from Feature.NGramFeature.StandardDeviationFeature import StandardDeviationFeature
+
+PATH = "corpus.arpa"
+stdF = StandardDeviationFeature(PATH)
+pF = Probability(PATH)
+
