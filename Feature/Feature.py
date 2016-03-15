@@ -1,6 +1,9 @@
-class Feature(object):
+from abc import ABCMeta, abstractmethod
 
+
+class Feature(metaclass=ABCMeta):
+
+    @abstractmethod
     def evaluate(self, sentence):
-        value = None
-        return value
+        pass
 

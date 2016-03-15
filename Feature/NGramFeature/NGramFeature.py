@@ -1,12 +1,14 @@
-from Feature import Feature
+from ..Feature import Feature
+from abc import ABCMeta
 import kenlm
 
 
-class NGramFeature(Feature):
+class NGramFeature(Feature, metaclass=ABCMeta):
 
     _model = None
 
     def __init__(self, file_path):
+        super(Feature, self).__init__()
         if not self._model:
             self.load_model(file_path)
 

@@ -1,7 +1,7 @@
-from Feature.NGramFeature.ProbabilityFeature import Probability
-from Feature.NGramFeature.StandardDeviationFeature import StandardDeviationFeature
+from Feature.NGramFeature import ProbabilityFeature
+from Feature.NGramFeature import StandardDeviationFeature
 
 PATH = "corpus.arpa"
-stdF = StandardDeviationFeature(PATH)
-pF = Probability(PATH)
+stdF = StandardDeviationFeature.StandardDeviationFeature(PATH)
+pF = ProbabilityFeature.Probability(PATH)
 
