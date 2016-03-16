@@ -10,12 +10,11 @@ def clean_wiki_corpus(old_file_path, new_file_path):
             keep_killing = False
             for line in corpus:
                 if re.search(r"<doc.*>", line) or re.search(r"</doc.*>", line):
-                    writee.write('\n')
+                    pass
                 elif re.search(r"ENDOFARTICLE\.", line):
                     keep_killing = False
-                    writee.write(line)
                 elif keep_killing:
-                    writee.write('\n')
+                    pass
                 elif re.search(r" Fuentes \.", line)\
                         or re.search(r" Referencias \.", line)\
                         or re.search(r" Bibliografía\ \.", line)\
@@ -26,7 +25,9 @@ def clean_wiki_corpus(old_file_path, new_file_path):
                         or re.search(r" Referencias y enlaces externos \.", line):
 
                     keep_killing = True
-                    writee.write('\n')
+                    pass
+                elif not line.strip():
+                    pass
                 else:
                     writee.write(line)
 
