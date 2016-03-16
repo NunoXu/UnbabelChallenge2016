@@ -1,5 +1,14 @@
 import re
-import codecs
+from nltk.tokenize import wordpunct_tokenize
+
+
+def tokenize_file(old_file_path, new_file_path):
+     with open(new_file_path, mode='w', encoding='latin-1') as writee:
+        with open(old_file_path, mode='r', encoding='latin-1') as corpus:
+            for line in corpus:
+                line_tokens = wordpunct_tokenize(line)
+                new_line = ' '.join(line_tokens)
+                writee.write(new_line + '\n')
 
 
 def clean_wiki_corpus(old_file_path, new_file_path):
