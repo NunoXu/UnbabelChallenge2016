@@ -1,7 +1,7 @@
 from Feature.NGramFeature import ProbabilityFeature
 from Feature.NGramFeature import StandardDeviationFeature
 from Reader import TrainingFileReader
-from sklearn import svm
+from sklearn import svm, cross_validation
 import pickle
 
 
@@ -29,9 +29,10 @@ with open('training_data_features.pickle', 'w') as pickle_file:
 
 
 clf = svm.SVC()
+scores = cross_validation.cross_val_score(clf, training_set['features'], training_set['classifications'], cv=10)
+print(scores)
+
+clf = svm.SVC()
 clf.fit(training_set['features'], training_set[''])
-
-
 with open('SVC_model.pickle', 'w') as pickle_file:
     pickle.dump(clf, pickle_file)
-
