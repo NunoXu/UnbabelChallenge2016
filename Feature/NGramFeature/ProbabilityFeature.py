@@ -1,5 +1,6 @@
 import kenlm
 import numpy
+import math
 from .NGramFeature import NGramFeature
 
 
@@ -9,5 +10,5 @@ class Probability(NGramFeature):
         super(Probability, self).__init__(model_path)
 
     def evaluate(self, sentence):
-        return self._model.score(sentence)
+        return math.pow(10, self._model.score(sentence))
 
