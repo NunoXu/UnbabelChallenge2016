@@ -5,7 +5,7 @@ from sklearn import svm, cross_validation
 import pickle
 
 
-PATH = "corpus.arpa"
+PATH = "4.arpa"
 stdF = StandardDeviationFeature.StandardDeviationFeature(PATH)
 pF = ProbabilityFeature.Probability(PATH)
 features = [stdF, pF]
