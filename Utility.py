@@ -11,6 +11,24 @@ def tokenize_file(old_file_path, new_file_path):
                 writee.write(new_line + '\n')
 
 
+def extract_partial_file(filepath, ratio, new_file_path, other_file_path):
+    stored = 0
+    ignored = 0
+    total = -1
+
+    with open(filepath, mode='r', encoding='latin-1') as read:
+        with open(new_file_path, mode='w', encoding='latin-1') as training_set:
+            with open(other_file_path, mode='w', encoding='latin-1') as test_set:
+                for line in read:
+                    if float(stored)/total < ratio:
+                        training_set.write(line)
+                        stored += 1
+                    else:
+                        test_set.write(line)
+                        ignored += 1
+                    total = stored + ignored
+
+
 def clean_wiki_corpus(old_file_path, new_file_path):
 
     with open(new_file_path, mode='w') as writee:
@@ -41,4 +59,17 @@ def clean_wiki_corpus(old_file_path, new_file_path):
                     writee.write(line)
 
 
+def separate_file_into_two(file_path):
+
+    with open(file_path, mode='r', encoding='latin-1') as file:
+        with open("0.txt", mode='w', encoding='latin-1') as zerofile:
+            with open("1.txt", mode='w', encoding='latin-1') as onefile:
+                for line in file:
+                    if line.strip():
+                        if line[0] == '0':
+                            zerofile.write(line[2:])
+                        elif line[0] == '1':
+                            onefile.write(line[2:])
+                        else:
+                            print("Asneira")
 

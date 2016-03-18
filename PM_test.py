@@ -1,6 +1,6 @@
 from pymining import itemmining
 from nltk.tokenize import wordpunct_tokenize
-
+from Utility import extract_partial_file
 """
 with open("/home/valchier/Desktop/training.txt") as file:
     line_tokens_list = list()
@@ -15,15 +15,4 @@ with open("/home/valchier/Desktop/training.txt") as file:
         for key in report.keys():
             writee.write(str(key) + ' ' + str(report.get(key)) + '\n')
 """
-
-with open("/home/valchier/Desktop/training.txt", mode='r', encoding='latin-1') as file:
-    with open("0.txt", mode='w', encoding='latin-1') as zerofile:
-        with open("1.txt", mode='w', encoding='latin-1') as onefile:
-            for line in file:
-                if line.strip():
-                    if line[0] == '0':
-                        zerofile.write(line[2:])
-                    elif line[0] == '1':
-                        onefile.write(line[2:])
-                    else:
-                        print("Asneira")
+extract_partial_file("/home/valchier/Desktop/training.txt", 0.8, "ourtraining.txt", "ourtest.txt")
