@@ -1,6 +1,13 @@
+# -*- coding: utf-8 -*
+
 import re
+import codecs
+import requests
+import json
+from sklearn import svm, cross_validation
 from nltk.tokenize import wordpunct_tokenize
 
+from Reader import TrainingFileReader
 
 def tokenize_file(old_file_path, new_file_path):
      with open(new_file_path, mode='w', encoding='latin-1') as writee:
@@ -73,3 +80,30 @@ def separate_file_into_two(file_path):
                         else:
                             print("Asneira")
 
+    sentences = TrainingFileReader.load_training_file(file_name)
+    #sentences = [{u'sentence':u'la biblíoteca'}]
+    headers={'Content-Type': 'application/json; charset=UTF-8'}
+
+def tag_corpus(file_name, host_address, props):
+
+    with open("tagged_corpus.txt", "w") as pos_corpus:
+        for sentence in sentences:
+            props['annotators'] = 'tokenize, ssplit, pos'
+            sent = sentence['sentence']
+            r = requests.post(host_address, params=props, headers=headers, data=sent.encode('UTF-8'))
+
+            json_response = json.loads(r.text, strict=False)
+            for json_sent in json_response['sentences']:
+                pos_sent = []
+                for token in json_sent['tokens']:
+                    pos_sent.append(token['pos'])
+
+                pos_sent = " ".join(pos_sent)
+                pos_corpus.write(pos_sent)
+
+if __name__ == '__main__':
+
+    with open("core_nlp_spanish.props", mode="r") as props_file:
+        props = {'properties': props_file.read().replace('\n', '').replace(' ', '')}
+        print(props)
+        tag_corpus("training.txt", host_address="http://146.193.224.53:9000/", props=props)

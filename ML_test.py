@@ -5,9 +5,9 @@ from sklearn import svm, cross_validation
 import pickle
 
 
-PATH = "4.binary"
+PATH = "2.binary"
 features = [
-    #StandardDeviationFeature.StandardDeviationFeature(PATH),
+    StandardDeviationFeature.StandardDeviationFeature(PATH),
     ProbabilityFeature.Probability(PATH)
     ]
 
@@ -17,19 +17,23 @@ counter = 0
 training_set = {'features': [],
                 'classifications': []}
 
-for sentence in sentences:
+for count, sentence in enumerate(sentences):
     values = []
     for feature in features:
         values.append(feature.evaluate(sentence['sentence']))
     training_set['features'].append(values)
     training_set['classifications'].append(sentence['classification'])
 
+    if count - 10 == 0:
+        print("Processed " + str(count) + " sentences.")
+        break
+
 
 with open('training_data_features.pickle', 'wb') as pickle_file:
     pickle.dump(training_set, pickle_file)
 
 
-clf = svm.SVC(kernel='linear')
+clf = svm.SVC()
 scores = cross_validation.cross_val_score(clf, training_set['features'], training_set['classifications'], cv=10)
 print(scores)
 """

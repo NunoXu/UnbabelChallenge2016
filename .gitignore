@@ -68,3 +68,4 @@ target/
 *.arpa
 *.pickle
 *.binary
+tagged_corpus.txt
