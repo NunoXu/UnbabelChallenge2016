@@ -66,11 +66,11 @@ def clean_wiki_corpus(old_file_path, new_file_path):
                     writee.write(line)
 
 
-def separate_file_into_two(file_path):
+def separate_file_into_two(file_path, mt_file_name, hmn_file_name):
 
     with open(file_path, mode='r', encoding='latin-1') as file:
-        with open("0.txt", mode='w', encoding='latin-1') as zerofile:
-            with open("1.txt", mode='w', encoding='latin-1') as onefile:
+        with open(mt_file_name, mode='w', encoding='latin-1') as zerofile:
+            with open(hmn_file_name, mode='w', encoding='latin-1') as onefile:
                 for line in file:
                     if line.strip():
                         if line[0] == '0':
@@ -104,7 +104,11 @@ def tag_corpus(file_name, host_address, props):
 
 if __name__ == '__main__':
 
+    """
     with open("core_nlp_spanish.props", mode="r") as props_file:
         props = {'properties': props_file.read().replace('\n', '').replace(' ', '')}
         print(props)
         tag_corpus("training.txt", host_address="http://146.193.224.53:9000/", props=props)
+    """
+    #separate_file_into_two("tagged_corpus.txt", "mt_pos_corpus.txt", "hmn_pos_corpus.txt")
+
