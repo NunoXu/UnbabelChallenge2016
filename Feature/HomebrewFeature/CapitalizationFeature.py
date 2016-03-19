@@ -12,7 +12,19 @@ class CapitalizationFeature(Feature):
         count = 0
 
         for token in tokens:
-            if token not in string.punctuation and token.isupper():
-                count += 1
+            if token not in string.punctuation:
+                if self.iswordupper(token):
+                    count += 1
 
         return float(count)/float(len(tokens))
+
+    def iswordupper(self, word):
+
+        is_upper = True
+        chars = list(word)
+        for char in chars:
+            if char.islower():
+                is_upper = False
+                break
+
+        return is_upper
