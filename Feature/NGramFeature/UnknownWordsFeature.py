@@ -11,7 +11,8 @@ class UnknownWordsFeature(NGramFeature):
         tokens = wordpunct_tokenize(sentence)
         count = 0
         for token in tokens:
-            if self._model.score(token) == 0:
-                count += 1
+            for i, (prob, length, oov) in enumerate(self._model.full_scores(token)):
+                if oov:
+                    count += 1
         return float(count)/float(len(tokens))
 
