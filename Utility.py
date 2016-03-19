@@ -80,26 +80,27 @@ def separate_file_into_two(file_path):
                         else:
                             print("Asneira")
 
-    sentences = TrainingFileReader.load_training_file(file_name)
-    #sentences = [{u'sentence':u'la biblíoteca'}]
-    headers={'Content-Type': 'application/json; charset=UTF-8'}
 
 def tag_corpus(file_name, host_address, props):
 
+    sentences = TrainingFileReader.load_training_file(file_name)
+    #sentences = [{u'sentence':u'We Are Wow ya ha dado en el blanco de asociacines de contenidos con los clubes de fútbol en la Reino Unido , Portugal y los Países Bajos , entre ellos el Chelsea a FC , Everton FC y el SL Benfica .'}]
+    headers={'Content-Type': 'application/json; charset=UTF-8'}
+
     with open("tagged_corpus.txt", "w") as pos_corpus:
         for sentence in sentences:
-            props['annotators'] = 'tokenize, ssplit, pos'
+            #props['annotators'] = 'tokenize, ssplit, pos'
             sent = sentence['sentence']
             r = requests.post(host_address, params=props, headers=headers, data=sent.encode('UTF-8'))
 
             json_response = json.loads(r.text, strict=False)
+            pos_sent = []
             for json_sent in json_response['sentences']:
-                pos_sent = []
                 for token in json_sent['tokens']:
                     pos_sent.append(token['pos'])
 
-                pos_sent = " ".join(pos_sent)
-                pos_corpus.write(pos_sent)
+            pos_sent = " ".join(pos_sent)
+            pos_corpus.write(str(sentence['classification']) + " " + pos_sent + '\n')
 
 if __name__ == '__main__':
 
