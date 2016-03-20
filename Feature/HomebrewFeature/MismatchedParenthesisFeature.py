@@ -1,4 +1,4 @@
-import Feature
+from ..Feature import Feature
 from nltk.tokenize import wordpunct_tokenize
 
 class MistmatchedParenthesisFeature(Feature):

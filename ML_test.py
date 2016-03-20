@@ -1,14 +1,26 @@
 from Feature.NGramFeature import ProbabilityFeature
 from Feature.NGramFeature import StandardDeviationFeature
+from Feature.NGramFeature import UnknownWordsFeature
+from Feature.HomebrewFeature import CapitalizationFeature
+from Feature.HomebrewFeature import MismatchedParenthesisFeature
+from Feature.HomebrewFeature import WeirdPunctuationFeature
+from Feature.SyntaxFeature import MTPatternFeature
 from Reader import TrainingFileReader
 from sklearn import svm, cross_validation
 import pickle
 
 
-PATH = "2.binary"
+PATH = "n_grams/4.binary"
+CORE_NLP_HOST_ADDRESS="http://146.193.224.53:9000/"
+CORE_NLP_SPANISH_PROPS="core_nlp_spanish.props"
 features = [
     StandardDeviationFeature.StandardDeviationFeature(PATH),
-    ProbabilityFeature.Probability(PATH)
+    ProbabilityFeature.Probability(PATH),
+    UnknownWordsFeature.UnknownWordsFeature(PATH),
+    MTPatternFeature.MTPatternFeature(CORE_NLP_HOST_ADDRESS, CORE_NLP_SPANISH_PROPS),
+    CapitalizationFeature.CapitalizationFeature(),
+    MismatchedParenthesisFeature.MistmatchedParenthesisFeature(),
+    WeirdPunctuationFeature.WeirdPunctuationFeature()
     ]
 
 sentences = TrainingFileReader.load_training_file("training.txt")
@@ -24,9 +36,9 @@ for count, sentence in enumerate(sentences):
     training_set['features'].append(values)
     training_set['classifications'].append(sentence['classification'])
 
-    if count - 10 == 0:
+    if count % 100 == 0:
         print("Processed " + str(count) + " sentences.")
-        break
+
 
 
 with open('training_data_features.pickle', 'wb') as pickle_file:
@@ -34,7 +46,7 @@ with open('training_data_features.pickle', 'wb') as pickle_file:
 
 
 clf = svm.SVC()
-scores = cross_validation.cross_val_score(clf, training_set['features'], training_set['classifications'], cv=10)
+scores = cross_validation.cross_val_score(clf, training_set['features'], training_set['classifications'], cv=6)
 print(scores)
 """
 clf = svm.SVC()

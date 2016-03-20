@@ -1,10 +1,12 @@
-import Feature
+from ..Feature import Feature
 from nltk.tokenize import wordpunct_tokenize
 import string
 
 
 class CapitalizationFeature(Feature):
 
+    def __init__(self):
+        super(CapitalizationFeature, self).__init__()
 
     def evaluate(self, sentence):
 
