@@ -8,13 +8,16 @@ class MTPatternFeature(SyntaxFeature):
 
     def evaluate(self, sentence):
         pos_tags = self.get_pos_tags(self.make_call_to_api(sentence))
-        counter = 0
-        for tag in pos_tags:
-            if tag in ['sp000', 'da0000', 'nc0s000']:
-                counter += 1
 
-        if counter > 1:
-            return float(counter) / 3.0
+        tag_String = ""
+
+        desired_tag = 'sp000' + 'da0000' + 'nc0s000'
+        #TODO: recortar caracteres desinteressantes de forma a garantir que isto PODE acontecer
+        for tag in pos_tags:
+            tag_String += str(tag)
+
+        if desired_tag in tag_String:
+            return 1
         else:
             return 0
 
