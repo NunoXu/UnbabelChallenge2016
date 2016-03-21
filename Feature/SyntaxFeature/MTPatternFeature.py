@@ -16,7 +16,7 @@ class MTPatternFeature(SyntaxFeature):
         for tag in pos_tags:
             tag_String += str(tag)
 
-        if desired_tag in tag_String:
+        if tag_String.find(desired_tag) != -1:
             return 1
         else:
             return 0
