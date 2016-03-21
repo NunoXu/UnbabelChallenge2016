@@ -10,6 +10,15 @@ from sklearn import svm, cross_validation
 import pickle
 
 
+def write_classifications_to_file(pickle_path, file_path, new_file_path):
+    with pickle.load(pickle_path) as classifier:
+        with open(new_file_path, mode='w', encoding='latin-1') as writee:
+            with open(file_path, mode='r', encoding='latin-1') as test_set:
+                for line in test_set:
+                    analysis_line = line[2:]
+                    classification = classifier.classify(analysis_line) #TODO: XU REPLACE ME FOR SOMETHING GOOD
+                    writee.write(str(classification) + line[1:])
+
 PATH = "n_grams/4.binary"
 CORE_NLP_HOST_ADDRESS="http://146.193.224.53:9000/"
 CORE_NLP_SPANISH_PROPS="core_nlp_spanish.props"
