@@ -4,7 +4,7 @@ colorama==0.3.3
 decorator==4.0.2
 html5lib==0.999
 ipython==2.3.0
-Jinja2==2.8
+Jinja2==2.11.3
 kenlm==0.0.0
 lxml==3.4.4
 MarkupSafe==0.23
