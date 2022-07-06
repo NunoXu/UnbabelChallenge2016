@@ -6,7 +6,7 @@ html5lib==0.999
 ipython==2.3.0
 Jinja2==2.8
 kenlm==0.0.0
-lxml==3.4.4
+lxml==4.9.1
 MarkupSafe==0.23
 matplotlib==1.4.2
 mpmath==0.19
